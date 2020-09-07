@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Story msg="Short Story 🔥"/>
+    <Story msg="CerpenKu 🔥"/>
   </div>
 </template>
 

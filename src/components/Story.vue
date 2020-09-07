@@ -3,26 +3,65 @@
 		<h1>{{ msg }}</h1>
 		<ul>
 			<li>
-				<a href="#">Next Story</a>
-			</li>
-			<li>
-				<a href="#">Share Story</a>
+				<a href="#" @click.prevent="getStory">Next Story</a>
 			</li>
 		</ul>
 		<div class="letter">
-			<h3>Dear Friends,</h3>
-			<div style="line-height: 1.3; line-spacing: 2;">
-				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus sunt quasi nisi, velit aperiam non laborum explicabo debitis et provident ea earum dolorum, officiis commodi tempora rerum reprehenderit! Quisquam, iure?
+			<div v-if="!is_loading" style="line-height: 1.3; line-spacing: 2;" v-html="story"></div>
+			<div v-else>
+				<img
+					src="https://i.pinimg.com/originals/f6/65/6a/f6656aa6fdb6b8f905dea0bcc2d71dd8.gif"
+					alt="loading"
+					width="125px"
+					style="margin-top: 125px;"
+				/>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
-	name: "HelloWorld",
+	name: "Story",
 	props: {
 		msg: String,
+	},
+	data() {
+		return {
+			story: "",
+			api_url: "http://api.fdci.se/cerpen",
+			api_proxy: "https://cors-anywhere.herokuapp.com/",
+			is_loading: false,
+			is_error: false,
+		};
+	},
+	mounted() {
+		this.getStory();
+	},
+	methods: {
+		async getStory() {
+			this.is_loading = true;
+			this.is_error = false;
+			try {
+				let response = await axios.post(
+					`${this.api_proxy}${this.api_url}`
+				);
+				this.story = response.data
+					.split('"')[1]
+					.replace(new RegExp("\\\\n", "g"), "<br>");
+				if (this.story == "viewport") {
+					this.story =
+						'<p style="margin-top: 150px;"><strong>Server Error, Coba Lagi</strong></p>';
+				}
+			} catch (e) {
+				this.is_error = true;
+				this.story =
+					'<p style="margin-top: 150px;"><strong>Server Error, Coba Lagi</strong></p>';
+			}
+
+			this.is_loading = false;
+		},
 	},
 };
 </script>
