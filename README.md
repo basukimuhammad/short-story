@@ -1,29 +1,8 @@
-# short-stories
+# Install
+- clone
+- npm install / yarn install
 
-## Project setup
-```
-npm install
-```
+# Screenshot
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Dashboard
+![Page](https://raw.githubusercontent.com/azharimm/short-story/master/thumbnail.PNG)
